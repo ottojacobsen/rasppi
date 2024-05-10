@@ -213,14 +213,18 @@ while True:
     cAy = (Ay - accel_bias_y)
     cAz = (Az - accel_bias_z)
     
+    #calibrated gyro readings
+    cGx = (Gx - gyro_bias_x)
+    cGy = (Gy - gyro_bias_y)
+    
     #calculate elapsed time
     current_time = time.time()
     dt = current_time - last_time
     last_time = current_time
 	
     #calculate pitch and roll angles using accelerometer data
-    pitch = math.atan2(cAy, math.sqrt(cAx ** 2 + cAz ** 2))
-    roll = math.atan2(-cAx, cAz)
+    pitch = math.atan2(Ay, math.sqrt(Ax ** 2 + Az ** 2))
+    roll = math.atan2(-Ax, Az)
     
     #combine gyroscope and accelerometer data using complementary filter
     pitch = alpha * (pitch + Gx * dt) + beta * pitch
